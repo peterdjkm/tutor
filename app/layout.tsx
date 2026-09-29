@@ -7,11 +7,11 @@ import bgImage from "../public/new-bg.png";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
-let title = "Llama Tutor – AI Personal Tutor";
+let title = "Tutor – AI Personal Tutor";
 let description = "Learn faster with our open source AI personal tutor";
-let url = "https://llamatutor.com/";
-let ogimage = "https://llamatutor.together.ai/og-image.png";
-let sitename = "llamatutor.com";
+let url = "http://localhost:3000/";
+let ogimage = "/og-image.png";
+let sitename = "Tutor";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <head>
-        <PlausibleProvider domain="llamatutor.together.ai" />
+        <PlausibleProvider domain="localhost" />
       </head>
 
       <body

@@ -1,29 +1,23 @@
-<a href="https://www.llamatutor.com">
-  <img alt="Llama Tutor" src="./public/og-image.png">
-  <h1 align="center">Llama Tutor</h1>
-</a>
+<h1 align="center">Tutor</h1>
 
 <p align="center">
-  An open source AI personal tutor. Powered by Llama 3 70B & Together.ai
+  An open source AI personal tutor.
 </p>
 
 ## Tech stack
 
-- Llama 3.1 70B from Meta for the LLM
-- Together AI for LLM inference
+- OpenRouter for LLM inference
 - Next.js app router with Tailwind
 - Exa.js for the search API
-- Helicone for observability
 - Plausible for website analytics
 
 ## Cloning & running
 
 1. Fork or clone the repo
-2. Create an account at [Together AI](https://togetherai.link/?utm_source=llamatutor&utm_medium=referral&utm_campaign=example-app) for the LLM
+2. Create an account at [OpenRouter](https://openrouter.ai/) for the LLM
 3. Create an account at [Exa](https://exa.ai/)
-4. Create an account at [Helicone](https://www.helicone.ai/) for observability
-5. Create a `.env` (use the `.example.env` for reference) and replace the API keys
-6. Run `npm install` and `npm run dev` to install dependencies and run locally
+4. Create a `.env` (use the `.example.env` for reference) and replace the API keys
+5. Run `npm install` and `npm run dev` to install dependencies and run locally
 
 ## Future Tasks
 
