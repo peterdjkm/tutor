@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "source ~/.peterdjkm/PipEnv/bin/activate && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -24,7 +24,6 @@
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
     "react-markdown": "^9.0.1",
-    "together-ai": "^0.32.0",
     "zod": "^4.1.13"
   },
   "devDependencies": {

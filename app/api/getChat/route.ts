@@ -1,7 +1,7 @@
 import {
-  TogetherAIStream,
-  TogetherAIStreamPayload,
-} from "@/utils/TogetherAIStream";
+  OpenRouterStream,
+  OpenRouterStreamPayload,
+} from "@/utils/OpenRouterStream";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { NextRequest } from "next/server";
@@ -34,12 +34,12 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const payload: TogetherAIStreamPayload = {
-      model: "Qwen/Qwen2.5-7B-Instruct-Turbo",
+    const payload: OpenRouterStreamPayload = {
+      model: process.env.OPENROUTER_MODEL ?? "deepseek/deepseek-v4-flash",
       messages,
       stream: true,
     };
-    const stream = await TogetherAIStream(payload);
+    const stream = await OpenRouterStream(payload);
 
     return new Response(stream, {
       headers: new Headers({
