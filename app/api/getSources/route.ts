@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { Exa } from "exa-js";
 
 let excludedSites = ["youtube.com"];
 
@@ -8,24 +7,40 @@ export async function POST(request: Request) {
 
   const finalQuestion = `what is ${question}`;
 
-  const EXA_API_KEY = process.env["EXA_API_KEY"];
-  if (!EXA_API_KEY) {
-    throw new Error("EXA_API_KEY is required");
+  const JINA_API_KEY = process.env["JINA_API_KEY"];
+  if (!JINA_API_KEY) {
+    throw new Error("JINA_API_KEY is required");
   }
 
-  const exa = new Exa(EXA_API_KEY);
+  const res = await fetch(
+    `https://s.jina.ai/${encodeURIComponent(finalQuestion)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${JINA_API_KEY}`,
+        Accept: "application/json",
+      },
+    },
+  );
 
-  const results = await exa.searchAndContents(finalQuestion, {
-    numResults: 9,
-    excludeDomains: excludedSites,
-    text: { maxCharacters: 10000 },
-  });
+  if (!res.ok) {
+    throw new Error(`Jina search failed: ${res.status} ${res.statusText}`);
+  }
 
-  let mappedResults = results.results.map((result) => ({
-    name: result.title,
-    url: result.url,
-    content: result.text,
-  }));
+  const { data } = (await res.json()) as {
+    data: { title: string; url: string; content: string }[];
+  };
+
+  let mappedResults = data
+    .filter(
+      (result) =>
+        !excludedSites.some((site) => result.url.includes(site)),
+    )
+    .slice(0, 9)
+    .map((result) => ({
+      name: result.title,
+      url: result.url,
+      content: result.content.slice(0, 10000),
+    }));
 
   return NextResponse.json(mappedResults);
 }

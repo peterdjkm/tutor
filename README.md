@@ -8,14 +8,14 @@
 
 - OpenRouter for LLM inference
 - Next.js app router with Tailwind
-- Exa.js for the search API
+- Jina AI for the search API
 - Plausible for website analytics
 
 ## Cloning & running
 
 1. Fork or clone the repo
 2. Create an account at [OpenRouter](https://openrouter.ai/) for the LLM
-3. Create an account at [Exa](https://exa.ai/)
+3. Create an account at [Jina AI](https://jina.ai/) for search
 4. Create a `.env` (use the `.example.env` for reference) and replace the API keys
 5. Run `npm install` and `npm run dev` to install dependencies and run locally
 
