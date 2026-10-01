@@ -102,13 +102,14 @@ export default function Home() {
       method: "POST",
       body: JSON.stringify({ question }),
     });
-    let sources;
+    let sources: { name: string; url: string; content: string }[];
     if (sourcesResponse.ok) {
       sources = await sourcesResponse.json();
 
       setSources(sources);
     } else {
-      setSources([]);
+      sources = [];
+      setSources(sources);
     }
     setIsLoadingSources(false);
 
