@@ -2,6 +2,19 @@ import { NextResponse } from "next/server";
 
 let excludedSites = ["youtube.com"];
 
+const blockedContentMarkers = [
+  "blocked by network security",
+  "access denied",
+  "403 forbidden",
+  "verify you are a human",
+  "enable javascript and cookies",
+];
+
+function isBlockedContent(content: string) {
+  const sample = content.slice(0, 500).toLowerCase();
+  return blockedContentMarkers.some((marker) => sample.includes(marker));
+}
+
 export async function POST(request: Request) {
   let { question } = await request.json();
 
@@ -33,13 +46,14 @@ export async function POST(request: Request) {
   let mappedResults = data
     .filter(
       (result) =>
-        !excludedSites.some((site) => result.url.includes(site)),
+        !excludedSites.some((site) => result.url.includes(site)) &&
+        !isBlockedContent(result.content),
     )
     .slice(0, 9)
     .map((result) => ({
       name: result.title,
       url: result.url,
-      content: result.content.slice(0, 10000),
+      content: result.content.slice(0, 2000),
     }));
 
   return NextResponse.json(mappedResults);
