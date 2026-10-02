@@ -142,6 +142,6 @@ export const getSystemPrompt = (
   ${contextNotes}
   </learner_profile>
 
-  Please return answer in markdown. It is very important for my career that you follow these instructions. Here is the topic to educate on:
+  Please return answer in markdown. For any mathematical notation, always use LaTeX delimiters — $...$ for inline math and $$...$$ for block equations — rather than plain-text/Unicode approximations; the renderer supports proper LaTeX, so use it consistently whenever you write an equation. It is very important for my career that you follow these instructions. Here is the topic to educate on:
     `;
 };

@@ -1,4 +1,8 @@
 import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import remarkGfm from "remark-gfm";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import FinalInputArea from "./FinalInputArea";
 import { useEffect, useRef, useState } from "react";
 import simpleLogo from "../public/simple-logo.png";
@@ -130,7 +134,11 @@ export default function Chat({
                       alt=""
                       className="absolute left-0 top-0 !my-0 size-7"
                     />
-                    <ReactMarkdown className="w-full pl-10">
+                    <ReactMarkdown
+                      className="w-full pl-10"
+                      remarkPlugins={[remarkMath, remarkGfm]}
+                      rehypePlugins={[rehypeKatex]}
+                    >
                       {message.content}
                     </ReactMarkdown>
                   </div>
