@@ -27,12 +27,16 @@ const Hero: FC<THeroProps> = ({
   handleInitialChat,
 }) => {
   const [suggestions, setSuggestions] = useState(defaultSuggestions);
+  const [suggestionsReady, setSuggestionsReady] = useState(false);
 
   // Re-roll one topic per category on every page load, client-side only
   // (so the server-rendered markup stays deterministic — no hydration
   // mismatch — and refreshing the page gives a fresh set to play with).
+  // suggestionsReady gates a fade-in so the swap from the default set to
+  // the random one reads as a smooth reveal instead of a jarring text flip.
   useEffect(() => {
     setSuggestions(getRandomSuggestions());
+    setSuggestionsReady(true);
   }, []);
 
   const handleClickSuggestion = (value: string) => {
@@ -67,24 +71,31 @@ const Hero: FC<THeroProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-2.5 pb-[30px] lg:flex-nowrap lg:justify-normal">
-          {suggestions.map((item) => (
-            <div
-              className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded border border-solid border-[#C1C1C1] px-2.5 py-2 transition hover:bg-gray-200"
-              onClick={() => handleClickSuggestion(item?.name)}
-              key={item.id}
-            >
-              <Image
-                src={item.icon}
-                alt={item.name}
-                width={18}
-                height={16}
-                className="w-[18px]"
-              />
-              <span className="text-sm font-light leading-[normal] text-[#1B1B16]">
-                {item.name}
-              </span>
-            </div>
-          ))}
+          {suggestionsReady
+            ? suggestions.map((item) => (
+                <div
+                  className="flex h-[35px] animate-[fadeIn_0.3s_ease-in] cursor-pointer items-center justify-center gap-[5px] rounded border border-solid border-[#C1C1C1] px-2.5 py-2 transition hover:bg-gray-200"
+                  onClick={() => handleClickSuggestion(item?.name)}
+                  key={item.id}
+                >
+                  <Image
+                    src={item.icon}
+                    alt={item.name}
+                    width={18}
+                    height={16}
+                    className="w-[18px]"
+                  />
+                  <span className="text-sm font-light leading-[normal] text-[#1B1B16]">
+                    {item.name}
+                  </span>
+                </div>
+              ))
+            : suggestions.map((item) => (
+                <div
+                  key={item.id}
+                  className="h-[35px] w-[150px] animate-pulse rounded bg-gray-200"
+                />
+              ))}
         </div>
         <p className="text-center text-sm font-light leading-[normal] text-[#1B1B16]">
           Fully open source!{" "}

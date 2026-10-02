@@ -72,7 +72,7 @@ export const topicCategories: topicCategory[] = [
   },
   {
     id: 2,
-    icon: "/us.svg",
+    icon: "/history.svg",
     topics: [
       "French Revolution",
       "Roman Empire",
