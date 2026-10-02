@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Sources from "@/components/Sources";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createParser,
   ParsedEvent,
@@ -17,14 +17,31 @@ export default function Home() {
   const [inputValue, setInputValue] = useState("");
   const [topic, setTopic] = useState("");
   const [showResult, setShowResult] = useState(false);
-  const [sources, setSources] = useState<{ name: string; url: string }[]>([]);
+  const [sources, setSources] = useState<
+    { name: string; url: string; content: string }[]
+  >([]);
   const [isLoadingSources, setIsLoadingSources] = useState(false);
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
     [],
   );
   const [loading, setLoading] = useState(false);
   const [depth, setDepth] = useState("College");
-  const [context, setContext] = useState("Student");
+  const [context, setContext] = useState("Working Professional");
+
+  // Changing depth/context mid-chat re-tunes the system prompt so the
+  // *next* reply reflects it, without touching anything already said.
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 0 || prev[0].role !== "system") {
+        return prev;
+      }
+      const updatedSystemMessage = {
+        ...prev[0],
+        content: getSystemPrompt(sources, depth, context),
+      };
+      return [updatedSystemMessage, ...prev.slice(1)];
+    });
+  }, [depth, context, sources]);
 
   const handleInitialChat = async () => {
     setShowResult(true);
@@ -143,7 +160,9 @@ export default function Home() {
                   handleChat={handleChat}
                   topic={topic}
                   depth={depth}
+                  setDepth={setDepth}
                   context={context}
+                  setContext={setContext}
                 />
                 <Sources sources={sources} isLoading={isLoadingSources} />
               </div>

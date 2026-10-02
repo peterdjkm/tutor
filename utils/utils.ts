@@ -72,6 +72,19 @@ export const suggestions: suggestionType[] = [
   },
 ];
 
+export const depthOptions = [
+  "Mid-High School",
+  "College",
+  "Graduate",
+  "General Adult",
+];
+
+export const contextOptions = [
+  "Technical & DIY",
+  "Everyday Life",
+  "Working Professional",
+];
+
 // How much to assume the learner already knows, and how formal to be.
 const depthGuidance: Record<string, string> = {
   "Mid-High School": `
@@ -86,12 +99,10 @@ const depthGuidance: Record<string, string> = {
 
 // What kind of examples, analogies, and framing will actually resonate.
 const contextGuidance: Record<string, string> = {
-  Student: `
-  Frame explanations around an academic/school context: how this connects to coursework, how it might show up on an assignment or exam, and how it fits into a broader subject. Lean on analogies from school, games, sports, and social media.`,
   "Technical & DIY": `
   Frame explanations around how things work and how to build or fix them: mechanisms, materials, tools, and hands-on experimentation. Favor examples a hobbyist builder or tinkerer would care about — specs, trade-offs, "why it's designed this way" — over abstract theory.`,
-  "Home Maker": `
-  Frame explanations around household and family life: budgeting, home management, cooking, raising kids, daily routines. Favor examples tied to running a home and making practical day-to-day decisions.`,
+  "Everyday Life": `
+  Frame explanations around ordinary daily life: household budgeting, routines, cooking, family life, errands — concrete things anyone deals with day to day. Favor simple, relatable, non-technical analogies over abstract theory; this is the option for someone who wants things grounded in plain, everyday experience, not a specific profession or role.`,
   "Working Professional": `
   Frame explanations around workplace and career relevance: decisions, efficiency, ROI, and real job scenarios. Lead with the "so what" and be concise — respect that this person has limited time and wants the practical takeaway, not theory for its own sake.`,
 };

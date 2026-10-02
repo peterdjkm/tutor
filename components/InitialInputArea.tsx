@@ -1,6 +1,7 @@
 import { FC, KeyboardEvent } from "react";
 import TypeAnimation from "./TypeAnimation";
 import Image from "next/image";
+import { depthOptions, contextOptions } from "@/utils/utils";
 
 type TInputAreaProps = {
   promptValue: string;
@@ -63,10 +64,9 @@ const InitialInputArea: FC<TInputAreaProps> = ({
             value={depth}
             onChange={(e) => setDepth(e.target.value)}
           >
-            <option>Mid-High School</option>
-            <option>College</option>
-            <option>Graduate</option>
-            <option>General Adult</option>
+            {depthOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
           </select>
         </div>
         <div className="flex items-center justify-center">
@@ -78,10 +78,9 @@ const InitialInputArea: FC<TInputAreaProps> = ({
             value={context}
             onChange={(e) => setContext(e.target.value)}
           >
-            <option>Student</option>
-            <option>Technical & DIY</option>
-            <option>Home Maker</option>
-            <option>Working Professional</option>
+            {contextOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
           </select>
         </div>
       </div>

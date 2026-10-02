@@ -3,6 +3,7 @@ import FinalInputArea from "./FinalInputArea";
 import { useEffect, useRef, useState } from "react";
 import simpleLogo from "../public/simple-logo.png";
 import Image from "next/image";
+import { depthOptions, contextOptions } from "@/utils/utils";
 
 export default function Chat({
   messages,
@@ -14,7 +15,9 @@ export default function Chat({
   handleChat,
   topic,
   depth,
+  setDepth,
   context,
+  setContext,
 }: {
   messages: { role: string; content: string }[];
   disabled: boolean;
@@ -27,7 +30,9 @@ export default function Chat({
   handleChat: () => void;
   topic: string;
   depth: string;
+  setDepth: React.Dispatch<React.SetStateAction<string>>;
   context: string;
+  setContext: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollableContainerRef = useRef<HTMLDivElement>(null);
@@ -67,16 +72,38 @@ export default function Chat({
   return (
     <div className="flex grow flex-col gap-4 overflow-hidden">
       <div className="flex grow flex-col overflow-hidden lg:p-4">
-        <p className="uppercase text-gray-900">
-          <b>Topic: </b>
-          {topic}
-          <span className="mx-2 normal-case text-gray-400">|</span>
-          <b>Depth: </b>
-          {depth}
-          <span className="mx-2 normal-case text-gray-400">|</span>
-          <b>Context: </b>
-          {context}
-        </p>
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 uppercase text-gray-900">
+          <p>
+            <b>Topic: </b>
+            {topic}
+          </p>
+          <span className="normal-case text-gray-400">|</span>
+          <label className="flex items-center gap-1">
+            <b>Depth:</b>
+            <select
+              className="rounded border border-gray-300 bg-white px-1 py-0.5 text-xs font-medium normal-case text-gray-900 sm:text-sm"
+              value={depth}
+              onChange={(e) => setDepth(e.target.value)}
+            >
+              {depthOptions.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
+            </select>
+          </label>
+          <span className="normal-case text-gray-400">|</span>
+          <label className="flex items-center gap-1">
+            <b>Context:</b>
+            <select
+              className="rounded border border-gray-300 bg-white px-1 py-0.5 text-xs font-medium normal-case text-gray-900 sm:text-sm"
+              value={context}
+              onChange={(e) => setContext(e.target.value)}
+            >
+              {contextOptions.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
+            </select>
+          </label>
+        </div>
         <div
           ref={scrollableContainerRef}
           className="mt-2 overflow-y-scroll rounded-lg border border-solid border-[#C2C2C2] bg-white px-5 lg:p-7"
