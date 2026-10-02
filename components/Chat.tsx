@@ -15,9 +15,8 @@ export default function Chat({
   handleChat,
   topic,
   depth,
-  setDepth,
   context,
-  setContext,
+  onApplyProfile,
 }: {
   messages: { role: string; content: string }[];
   disabled: boolean;
@@ -30,13 +29,16 @@ export default function Chat({
   handleChat: () => void;
   topic: string;
   depth: string;
-  setDepth: React.Dispatch<React.SetStateAction<string>>;
   context: string;
-  setContext: React.Dispatch<React.SetStateAction<string>>;
+  onApplyProfile: (depth: string, context: string) => void;
 }) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollableContainerRef = useRef<HTMLDivElement>(null);
   const [didScrollToBottom, setDidScrollToBottom] = useState(true);
+  const [pendingDepth, setPendingDepth] = useState(depth);
+  const [pendingContext, setPendingContext] = useState(context);
+  const hasPendingChange =
+    pendingDepth !== depth || pendingContext !== context;
 
   function scrollToBottom() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -82,8 +84,8 @@ export default function Chat({
             <b>Depth:</b>
             <select
               className="rounded border border-gray-300 bg-white px-1 py-0.5 text-xs font-medium normal-case text-gray-900 sm:text-sm"
-              value={depth}
-              onChange={(e) => setDepth(e.target.value)}
+              value={pendingDepth}
+              onChange={(e) => setPendingDepth(e.target.value)}
             >
               {depthOptions.map((option) => (
                 <option key={option}>{option}</option>
@@ -95,14 +97,24 @@ export default function Chat({
             <b>Context:</b>
             <select
               className="rounded border border-gray-300 bg-white px-1 py-0.5 text-xs font-medium normal-case text-gray-900 sm:text-sm"
-              value={context}
-              onChange={(e) => setContext(e.target.value)}
+              value={pendingContext}
+              onChange={(e) => setPendingContext(e.target.value)}
             >
               {contextOptions.map((option) => (
                 <option key={option}>{option}</option>
               ))}
             </select>
           </label>
+          {hasPendingChange && (
+            <button
+              type="button"
+              disabled={disabled}
+              onClick={() => onApplyProfile(pendingDepth, pendingContext)}
+              className="rounded bg-blue-500 px-2 py-0.5 text-xs font-bold normal-case text-white disabled:opacity-50 sm:text-sm"
+            >
+              Go
+            </button>
+          )}
         </div>
         <div
           ref={scrollableContainerRef}

@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Sources from "@/components/Sources";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   createParser,
   ParsedEvent,
@@ -28,20 +28,28 @@ export default function Home() {
   const [depth, setDepth] = useState("College");
   const [context, setContext] = useState("Working Professional");
 
-  // Changing depth/context mid-chat re-tunes the system prompt so the
-  // *next* reply reflects it, without touching anything already said.
-  useEffect(() => {
-    setMessages((prev) => {
-      if (prev.length === 0 || prev[0].role !== "system") {
-        return prev;
-      }
-      const updatedSystemMessage = {
-        ...prev[0],
-        content: getSystemPrompt(sources, depth, context),
-      };
-      return [updatedSystemMessage, ...prev.slice(1)];
-    });
-  }, [depth, context, sources]);
+  // Triggered only by the explicit "Go" button in Chat, never on mere
+  // dropdown selection, so scrolling through options doesn't fire requests.
+  const applyProfileChange = async (newDepth: string, newContext: string) => {
+    setDepth(newDepth);
+    setContext(newContext);
+
+    const updatedSystemMessage = {
+      role: "system",
+      content: getSystemPrompt(sources, newDepth, newContext),
+    };
+    const switchRequest = {
+      role: "user",
+      content: `Please switch to Depth: ${newDepth}, Context: ${newContext} and continue accordingly.`,
+    };
+    const updatedMessages = [
+      updatedSystemMessage,
+      ...messages.slice(1),
+      switchRequest,
+    ];
+    setMessages(updatedMessages);
+    await handleChat(updatedMessages);
+  };
 
   const handleInitialChat = async () => {
     setShowResult(true);
@@ -160,9 +168,8 @@ export default function Home() {
                   handleChat={handleChat}
                   topic={topic}
                   depth={depth}
-                  setDepth={setDepth}
                   context={context}
-                  setContext={setContext}
+                  onApplyProfile={applyProfileChange}
                 />
                 <Sources sources={sources} isLoading={isLoadingSources} />
               </div>
