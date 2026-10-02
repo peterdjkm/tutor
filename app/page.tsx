@@ -141,6 +141,7 @@ export default function Home() {
                   setMessages={setMessages}
                   handleChat={handleChat}
                   topic={topic}
+                  profile={profile}
                 />
                 <Sources sources={sources} isLoading={isLoadingSources} />
               </div>
