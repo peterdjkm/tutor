@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import desktopImg from "../public/desktop-screenshot.png";
 import mobileImg from "../public/screenshot-mobile.png";
 import InitialInputArea from "./InitialInputArea";
-import { suggestions } from "@/utils/utils";
+import { defaultSuggestions, getRandomSuggestions } from "@/utils/utils";
 
 type THeroProps = {
   promptValue: string;
@@ -26,6 +26,15 @@ const Hero: FC<THeroProps> = ({
   setContext,
   handleInitialChat,
 }) => {
+  const [suggestions, setSuggestions] = useState(defaultSuggestions);
+
+  // Re-roll one topic per category on every page load, client-side only
+  // (so the server-rendered markup stays deterministic — no hydration
+  // mismatch — and refreshing the page gives a fresh set to play with).
+  useEffect(() => {
+    setSuggestions(getRandomSuggestions());
+  }, []);
+
   const handleClickSuggestion = (value: string) => {
     setPromptValue(value);
   };

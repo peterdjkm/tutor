@@ -49,28 +49,83 @@ type suggestionType = {
   icon: string;
 };
 
-export const suggestions: suggestionType[] = [
+type topicCategory = {
+  id: number;
+  icon: string;
+  topics: string[];
+};
+
+// One pool of topics per category; a random one from each is shown as a
+// homepage suggestion chip, re-rolled on every page load.
+export const topicCategories: topicCategory[] = [
   {
     id: 1,
-    name: "Basketball",
-    icon: "/basketball-new.svg",
+    icon: "/light-new.svg",
+    topics: [
+      "AI Prompt Engineering",
+      "Neural Networks",
+      "Large Language Models",
+      "Computer Vision",
+      "Reinforcement Learning",
+      "Generative Adversarial Networks",
+    ],
   },
   {
     id: 2,
-    name: "Machine Learning",
-    icon: "/light-new.svg",
+    icon: "/us.svg",
+    topics: [
+      "French Revolution",
+      "Roman Empire",
+      "Cold War",
+      "Industrial Revolution",
+      "Ancient Egypt",
+      "World War II",
+    ],
   },
   {
     id: 3,
-    name: "Personal Finance",
-    icon: "/finance.svg",
+    icon: "/energy.svg",
+    topics: [
+      "Wind Energy",
+      "Solar Power",
+      "Nuclear Fission",
+      "Battery Storage",
+      "Hydroelectric Power",
+      "Carbon Capture",
+    ],
   },
   {
     id: 4,
-    name: "U.S History",
-    icon: "/us.svg",
+    icon: "/finance.svg",
+    topics: [
+      "Interest-Rate Swaps",
+      "Stock Market Basics",
+      "Venture Capital",
+      "Mergers and Acquisitions",
+      "Cryptocurrency",
+      "Behavioral Economics",
+    ],
   },
 ];
+
+// Deterministic first pick per category — used for the server-rendered
+// initial state so there's no hydration mismatch; randomized client-side
+// right after mount (see Hero.tsx).
+export const defaultSuggestions: suggestionType[] = topicCategories.map(
+  (category) => ({
+    id: category.id,
+    name: category.topics[0],
+    icon: category.icon,
+  }),
+);
+
+export function getRandomSuggestions(): suggestionType[] {
+  return topicCategories.map((category) => ({
+    id: category.id,
+    name: category.topics[Math.floor(Math.random() * category.topics.length)],
+    icon: category.icon,
+  }));
+}
 
 export const depthOptions = [
   "Mid-High School",
