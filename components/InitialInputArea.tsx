@@ -7,8 +7,8 @@ type TInputAreaProps = {
   setPromptValue: React.Dispatch<React.SetStateAction<string>>;
   disabled?: boolean;
   handleChat: (messages?: { role: string; content: string }[]) => void;
-  ageGroup: string;
-  setAgeGroup: React.Dispatch<React.SetStateAction<string>>;
+  profile: string;
+  setProfile: React.Dispatch<React.SetStateAction<string>>;
   handleInitialChat: () => void;
 };
 
@@ -17,8 +17,8 @@ const InitialInputArea: FC<TInputAreaProps> = ({
   setPromptValue,
   disabled,
   handleInitialChat,
-  ageGroup,
-  setAgeGroup,
+  profile,
+  setProfile,
 }) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
@@ -52,18 +52,16 @@ const InitialInputArea: FC<TInputAreaProps> = ({
         />
         <div className="flex items-center justify-center">
           <select
-            id="grade"
-            name="grade"
+            id="profile"
+            name="profile"
             className="ring-none h-full rounded-md rounded-r-lg border-0 bg-transparent px-2 text-sm font-medium text-black focus:ring-0 sm:text-base"
-            value={ageGroup}
-            onChange={(e) => setAgeGroup(e.target.value)}
+            value={profile}
+            onChange={(e) => setProfile(e.target.value)}
           >
-            <option>Elementary School</option>
-            <option>Middle School</option>
-            <option>High School</option>
+            <option>Mid-High School</option>
             <option>College</option>
-            <option>Undergrad</option>
             <option>Graduate</option>
+            <option>Working Professional</option>
           </select>
         </div>
       </div>

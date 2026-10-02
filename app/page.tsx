@@ -23,7 +23,7 @@ export default function Home() {
     [],
   );
   const [loading, setLoading] = useState(false);
-  const [ageGroup, setAgeGroup] = useState("Middle School");
+  const [profile, setProfile] = useState("College");
 
   const handleInitialChat = async () => {
     setShowResult(true);
@@ -114,7 +114,7 @@ export default function Home() {
     setIsLoadingSources(false);
 
     const initialMessage = [
-      { role: "system", content: getSystemPrompt(sources, ageGroup) },
+      { role: "system", content: getSystemPrompt(sources, profile) },
       { role: "user", content: `${question}` },
     ];
     setMessages(initialMessage);
@@ -151,8 +151,8 @@ export default function Home() {
             promptValue={inputValue}
             setPromptValue={setInputValue}
             handleChat={handleChat}
-            ageGroup={ageGroup}
-            setAgeGroup={setAgeGroup}
+            profile={profile}
+            setProfile={setProfile}
             handleInitialChat={handleInitialChat}
           />
         )}

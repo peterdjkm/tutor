@@ -9,8 +9,8 @@ type THeroProps = {
   promptValue: string;
   setPromptValue: React.Dispatch<React.SetStateAction<string>>;
   handleChat: (messages?: { role: string; content: string }[]) => void;
-  ageGroup: string;
-  setAgeGroup: React.Dispatch<React.SetStateAction<string>>;
+  profile: string;
+  setProfile: React.Dispatch<React.SetStateAction<string>>;
   handleInitialChat: () => void;
 };
 
@@ -18,8 +18,8 @@ const Hero: FC<THeroProps> = ({
   promptValue,
   setPromptValue,
   handleChat,
-  ageGroup,
-  setAgeGroup,
+  profile,
+  setProfile,
   handleInitialChat,
 }) => {
   const handleClickSuggestion = (value: string) => {
@@ -36,9 +36,8 @@ const Hero: FC<THeroProps> = ({
           </span>
         </h2>
         <p className="mt-4 text-balance text-center text-sm sm:text-base">
-          Enter a topic you want to learn about along with the education level
-          you want to be taught at and generate a personalized tutor tailored to
-          you!
+          Enter a topic you want to learn about along with your learner
+          profile and generate a personalized tutor tailored to you!
         </p>
 
         <div className="mt-4 w-full pb-6">
@@ -47,8 +46,8 @@ const Hero: FC<THeroProps> = ({
             handleInitialChat={handleInitialChat}
             setPromptValue={setPromptValue}
             handleChat={handleChat}
-            ageGroup={ageGroup}
-            setAgeGroup={setAgeGroup}
+            profile={profile}
+            setProfile={setProfile}
           />
         </div>
 
