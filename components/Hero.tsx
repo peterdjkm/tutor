@@ -9,8 +9,10 @@ type THeroProps = {
   promptValue: string;
   setPromptValue: React.Dispatch<React.SetStateAction<string>>;
   handleChat: (messages?: { role: string; content: string }[]) => void;
-  profile: string;
-  setProfile: React.Dispatch<React.SetStateAction<string>>;
+  depth: string;
+  setDepth: React.Dispatch<React.SetStateAction<string>>;
+  context: string;
+  setContext: React.Dispatch<React.SetStateAction<string>>;
   handleInitialChat: () => void;
 };
 
@@ -18,8 +20,10 @@ const Hero: FC<THeroProps> = ({
   promptValue,
   setPromptValue,
   handleChat,
-  profile,
-  setProfile,
+  depth,
+  setDepth,
+  context,
+  setContext,
   handleInitialChat,
 }) => {
   const handleClickSuggestion = (value: string) => {
@@ -46,8 +50,10 @@ const Hero: FC<THeroProps> = ({
             handleInitialChat={handleInitialChat}
             setPromptValue={setPromptValue}
             handleChat={handleChat}
-            profile={profile}
-            setProfile={setProfile}
+            depth={depth}
+            setDepth={setDepth}
+            context={context}
+            setContext={setContext}
           />
         </div>
 

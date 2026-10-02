@@ -13,7 +13,8 @@ export default function Chat({
   setMessages,
   handleChat,
   topic,
-  profile,
+  depth,
+  context,
 }: {
   messages: { role: string; content: string }[];
   disabled: boolean;
@@ -25,7 +26,8 @@ export default function Chat({
   >;
   handleChat: () => void;
   topic: string;
-  profile: string;
+  depth: string;
+  context: string;
 }) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollableContainerRef = useRef<HTMLDivElement>(null);
@@ -69,8 +71,11 @@ export default function Chat({
           <b>Topic: </b>
           {topic}
           <span className="mx-2 normal-case text-gray-400">|</span>
-          <b>Profile: </b>
-          {profile}
+          <b>Depth: </b>
+          {depth}
+          <span className="mx-2 normal-case text-gray-400">|</span>
+          <b>Context: </b>
+          {context}
         </p>
         <div
           ref={scrollableContainerRef}

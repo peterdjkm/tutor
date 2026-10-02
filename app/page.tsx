@@ -23,7 +23,8 @@ export default function Home() {
     [],
   );
   const [loading, setLoading] = useState(false);
-  const [profile, setProfile] = useState("College");
+  const [depth, setDepth] = useState("College");
+  const [context, setContext] = useState("Student");
 
   const handleInitialChat = async () => {
     setShowResult(true);
@@ -114,7 +115,7 @@ export default function Home() {
     setIsLoadingSources(false);
 
     const initialMessage = [
-      { role: "system", content: getSystemPrompt(sources, profile) },
+      { role: "system", content: getSystemPrompt(sources, depth, context) },
       { role: "user", content: `${question}` },
     ];
     setMessages(initialMessage);
@@ -141,7 +142,8 @@ export default function Home() {
                   setMessages={setMessages}
                   handleChat={handleChat}
                   topic={topic}
-                  profile={profile}
+                  depth={depth}
+                  context={context}
                 />
                 <Sources sources={sources} isLoading={isLoadingSources} />
               </div>
@@ -152,8 +154,10 @@ export default function Home() {
             promptValue={inputValue}
             setPromptValue={setInputValue}
             handleChat={handleChat}
-            profile={profile}
-            setProfile={setProfile}
+            depth={depth}
+            setDepth={setDepth}
+            context={context}
+            setContext={setContext}
             handleInitialChat={handleInitialChat}
           />
         )}
