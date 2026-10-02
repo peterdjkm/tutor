@@ -136,7 +136,10 @@ export default function Chat({
                     />
                     <ReactMarkdown
                       className="w-full pl-10"
-                      remarkPlugins={[remarkMath, remarkGfm]}
+                      remarkPlugins={[
+                        [remarkMath, { singleDollarTextMath: false }],
+                        remarkGfm,
+                      ]}
                       rehypePlugins={[rehypeKatex]}
                     >
                       {message.content}

@@ -197,6 +197,6 @@ export const getSystemPrompt = (
   ${contextNotes}
   </learner_profile>
 
-  Please return answer in markdown. For any mathematical notation, always use LaTeX delimiters — $...$ for inline math and $$...$$ for block equations — rather than plain-text/Unicode approximations; the renderer supports proper LaTeX, so use it consistently whenever you write an equation. It is very important for my career that you follow these instructions. Here is the topic to educate on:
+  Please return answer in markdown. For any mathematical notation, always wrap it in double dollar signs — $$...$$ — for both inline and block equations, rather than plain-text/Unicode approximations; the renderer supports proper LaTeX. Never use a single $ for math — a single $ is reserved for plain currency amounts (e.g. "$88 million") and must NOT be treated as a math delimiter. It is very important for my career that you follow these instructions. Here is the topic to educate on:
     `;
 };
